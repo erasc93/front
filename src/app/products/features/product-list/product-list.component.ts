@@ -1,7 +1,9 @@
+import { CommonModule } from "@angular/common";
 import { Component, OnInit, inject, signal } from "@angular/core";
 import { Product } from "app/products/data-access/product.model";
 import { ProductsService } from "app/products/data-access/products.service";
 import { ProductFormComponent } from "app/products/ui/product-form/product-form.component";
+import { BasketService } from "app/shared/basket.service";
 import { ButtonModule } from "primeng/button";
 import { CardModule } from "primeng/card";
 import { DataViewModule } from 'primeng/dataview';
@@ -29,9 +31,10 @@ const emptyProduct: Product = {
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
   standalone: true,
-  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent],
+  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent,CommonModule],
 })
 export class ProductListComponent implements OnInit {
+  constructor(protected basketService: BasketService) {}
   private readonly productsService = inject(ProductsService);
 
   public readonly products = this.productsService.products;
@@ -67,6 +70,12 @@ export class ProductListComponent implements OnInit {
       this.productsService.update(product).subscribe();
     }
     this.closeDialog();
+  }
+  public onAddToBasket(product: Product) {
+    this.basketService.AddProduct(product);
+  }
+  public onRemoveFromBasket(product: Product) {
+    this.basketService.RemoveProduct(product);
   }
 
   public onCancel() {

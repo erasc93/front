@@ -9,6 +9,7 @@ import { catchError, Observable, of, tap } from "rxjs";
 
     private readonly http = inject(HttpClient);
     private readonly path = "/api/products";
+    // private readonly path = "https://localhost:7003/products";
     
     private readonly _products = signal<Product[]>([]);
 
@@ -18,12 +19,14 @@ import { catchError, Observable, of, tap } from "rxjs";
         return this.http.get<Product[]>(this.path).pipe(
             catchError((error) => {
                 return this.http.get<Product[]>("assets/products.json");
+                // return this.http.get<Product[]>(`${this.path}`);
             }),
             tap((products) => this._products.set(products)),
         );
     }
 
     public create(product: Product): Observable<boolean> {
+
         return this.http.post<boolean>(this.path, product).pipe(
             catchError(() => {
                 return of(true);
@@ -44,6 +47,7 @@ import { catchError, Observable, of, tap } from "rxjs";
     }
 
     public delete(productId: number): Observable<boolean> {
+        console.log(`${this.path}`);
         return this.http.delete<boolean>(`${this.path}/${productId}`).pipe(
             catchError(() => {
                 return of(true);

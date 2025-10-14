@@ -1,0 +1,15 @@
+<form #contactForm="ngForm" (ngSubmit)="onSubmitForm(contactForm)">
+   <label for="emailInput">Email :</label>
+   <input type="email" id="emailInput" [(ngModel)]="userEmail" name="email" required #emailCtrl="ngModel" />
+   
+   <label for="messageInput">Message :</label>
+   <textarea id="messageInput" [(ngModel)]="userMessage" name="message" required maxlength="300" #messageCtrl="ngModel"></textarea>
+   
+   <button type="submit" [disabled]="contactForm.invalid">Envoyer</button>
+</form>
+
+@if(messageEnvoye){
+   <div class="text-green-600">
+      Demande de contact envoyée avec succès
+   </div>
+}

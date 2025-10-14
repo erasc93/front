@@ -2,17 +2,51 @@
 
 <p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
 
+    @for(product of  basketService.GetProductsQuantity() ;track product)
+    {
+        <p>{{product.name}}: {{product.quantity}}</p>
+    }
+
+    <ng-template pTemplate="header">
+        <div class="flex justify-content-between align-items-center">
+            <span class="text-xl font-bold">Produits disponibles ({{ products().length }})</span>
+        </div>
+    </ng-template>
 <p-dataView #dv [value]="products()">
     <ng-template pTemplate="list" let-products>
-        @for (product of products; track product) {
-            <p-card class="block mb-2">
-                <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
-                <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+        @for (product of products; track product.id) {
+            <p-card class="block mb-4" [header]="product.name" [subheader]="product.category">
+                @if(product.image){<img  [src]="product.image" alt="{{ product.name }}" class="w-full h-48 object-cover mb-3" />}
+                <p class="text-sm text-secondary mb-2">{{ product.description }}</p>
+                <!-- Informations clés -->
+                <div class="flex flex-wrap gap-4 text-sm mb-2">
+                    <div><strong>Code:</strong> {{ product.code }}</div>
+                    <div><strong>Prix:</strong> {{ product.price  }}</div>
+                    <div><strong>Quantité:</strong> {{ product.quantity }}</div>
+                    <div><strong>Référence interne:</strong> {{ product.internalReference }}</div>
+                    <div><strong>Stock:</strong> 
+                        <span [ngClass]="{
+                            'text-green-600': product.inventoryStatus === 'INSTOCK',
+                            'text-orange-500': product.inventoryStatus === 'LOWSTOCK',
+                            'text-red-600': product.inventoryStatus === 'OUTOFSTOCK'
+                        }">{{ product.inventoryStatus }}</span>
+                    </div>
+                    <div><strong>Évaluation:</strong> {{ product.rating }}/5</div>
+                </div>
 
+                <!-- Dates -->
+                <div class="text-xs text-gray-500 mb-2">
+                    Créé: {{ product.createdAt | date:'short' }} |
+                    Modifié: {{ product.updatedAt | date:'short' }}
+                </div>
+
+                <!-- Footer avec actions -->
                 <ng-template pTemplate="footer">
                     <div class="flex gap-3 mt-1">
-                        <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)"/>
+                        <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)" />
                         <p-button label="Supprimer" severity="danger" (onClick)="onDelete(product)" />
+                        <p-button label="Ajouter au panier" severity="primary" (onClick)="onAddToBasket(product)" />
+                        <p-button label="Retirer du panier" severity="primary" (onClick)="onRemoveFromBasket(product)" />
                     </div>
                 </ng-template>
             </p-card>
