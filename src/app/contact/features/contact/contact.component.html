@@ -1,16 +1,5 @@
 <form #contactForm="ngForm" (ngSubmit)="onSubmitForm(contactForm)">
 <p-dialog header="Envoyez un message" [modal]="true" [visible]="visible" [style]="{ width: '25rem' }">
-    <!-- <span class="p-text-secondary block mb-5">Envoyez un message.</span> -->
-    <!-- <div class="flex align-items-center gap-3 mb-3">
-        <label for="username" class="font-semibold w-6rem">Username</label>
-        <input pInputText id="username" class="flex-auto" autocomplete="off" />
-    </div>
-    <div class="flex align-items-center gap-3 mb-5">
-        <label for="email" class="font-semibold w-6rem">Email</label>
-        <input pInputText id="email" class="flex-auto" autocomplete="off" />
-    </div> -->
-
-
 
    <div class="flex align-items-center gap-3 mb-5">
       <label for="emailInput" 
@@ -34,19 +23,6 @@ class="flex-auto"
     </div>
 </p-dialog>
 </form>
-
-
-<!-- 
-
-<form #contactForm="ngForm" (ngSubmit)="onSubmitForm(contactForm)">
-   <label for="emailInput">Email :</label>
-   <input type="email" id="emailInput" [(ngModel)]="userEmail" name="email" required #emailCtrl="ngModel" />
-   
-   <label for="messageInput">Message :</label>
-   <textarea id="messageInput" [(ngModel)]="userMessage" name="message" required maxlength="300" #messageCtrl="ngModel"></textarea>
-   
-   <button type="submit" [disabled]="contactForm.invalid">Envoyer</button>
-</form> -->
 
 @if(messageEnvoye){
    <div class="text-green-600">
