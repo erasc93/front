@@ -8,6 +8,7 @@ import { ButtonModule } from "primeng/button";
 import { CardModule } from "primeng/card";
 import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
+import { ProductCardComponent } from "../product-card/product-card.component";
 
 const emptyProduct: Product = {
   id: 0,
@@ -31,7 +32,7 @@ const emptyProduct: Product = {
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
   standalone: true,
-  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent,CommonModule],
+  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent,CommonModule,ProductCardComponent],
 })
 export class ProductListComponent implements OnInit {
   constructor(protected basketService: BasketService) {}
@@ -44,23 +45,15 @@ export class ProductListComponent implements OnInit {
   public readonly editedProduct = signal<Product>(emptyProduct);
 
   ngOnInit() {
-    this.productsService.get().subscribe();
+    this.productsService
+      .get()
+      .subscribe();
   }
 
   public onCreate() {
     this.isCreation = true;
     this.isDialogVisible = true;
     this.editedProduct.set(emptyProduct);
-  }
-
-  public onUpdate(product: Product) {
-    this.isCreation = false;
-    this.isDialogVisible = true;
-    this.editedProduct.set(product);
-  }
-
-  public onDelete(product: Product) {
-    this.productsService.delete(product.id).subscribe();
   }
 
   public onSave(product: Product) {
@@ -71,6 +64,16 @@ export class ProductListComponent implements OnInit {
     }
     this.closeDialog();
   }
+  public onUpdate(product: Product) {
+    this.isCreation = false;
+    this.isDialogVisible = true;
+    this.editedProduct.set(product);
+  }
+
+  public onDelete(product: Product) {
+    this.productsService.delete(product.id).subscribe();
+  }
+
   public onAddToBasket(product: Product) {
     this.basketService.AddProduct(product);
   }

@@ -1,0 +1,79 @@
+<!-- <p-card class="block mb-4" [header]="product.name" [subheader]="product.category">
+   @if(product.image){<img  [src]="product.image" alt="{{ product.name }}" class="w-1/2 h-48 object-cover mb-3" />}
+   <p class="text-sm text-secondary mb-2">{{ product.description }}</p>
+   <div class="flex flex-wrap gap-4 text-sm mb-2">
+      <div><strong>Code:</strong> {{ product.code }}</div>
+      <div><strong>Prix:</strong> {{ product.price  }}</div>
+      <div><strong>Quantité:</strong> {{ product.quantity }}</div>
+      <div><strong>Référence interne:</strong> {{ product.internalReference }}</div>
+      <div><strong>Stock:</strong> 
+         <span [ngClass]="{
+         'text-green-600': product.inventoryStatus === 'INSTOCK',
+         'text-orange-500': product.inventoryStatus === 'LOWSTOCK',
+         'text-red-600': product.inventoryStatus === 'OUTOFSTOCK'
+         }">{{ product.inventoryStatus }}</span>
+      </div>
+      <div><strong>Évaluation:</strong> {{ product.rating }}/5</div>
+   </div>
+   
+   <div class="text-xs text-gray-500 mb-2">
+      Créé: {{ product.createdAt | date:'short' }} |
+      Modifié: {{ product.updatedAt | date:'short' }}
+   </div>
+   
+   <ng-template pTemplate="footer">
+      <div class="flex gap-3 mt-1">
+         <p-button label="Modifier" severity="secondary" (onClick)="this.update.emit(product)" />
+         <p-button label="Supprimer" severity="danger" (onClick)="delete.emit(product)" />
+         <p-button label="Ajouter au panier" severity="primary" (onClick)="addToBasket.emit(product)" />
+         <p-button label="Retirer du panier" severity="primary" (onClick)="removeFromBasket.emit(product)" />
+      </div>
+   </ng-template>
+</p-card>
+-->
+
+
+
+
+<!-- more info on https://v17.primeng.org/dataview -->
+
+<div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3 border-top-1" >
+   <div class="md:w-10rem relative">
+      <img class="block xl:block mx-auto border-round w-full" [src]="product.image" [alt]="product.name" />
+      <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product)" class="absolute" [style.left.px]="4" [style.top.px]="4" />
+   </div>
+   <div class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+      <div class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+         <div>
+            <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
+            <div class="text-lg font-medium text-900 mt-2">{{ product.name }}</div>
+         </div>
+         <div class="surface-100 p-1" style="border-radius: 30px">
+            <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2" style="border-radius: 30px; box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.04), 0px 1px 2px 0px rgba(0, 0, 0, 0.06)">
+               <span class="text-900 font-medium text-sm">{{ product.rating }}</span>
+               <i class="pi pi-star-fill text-yellow-500"></i>
+            </div>
+         </div>
+      </div>
+      <div class="flex flex-column md:align-items-end gap-5">
+         <span class="text-xl font-semibold text-900">{{ '$' + product.price }}</span>
+         <div class="flex flex-row-reverse md:flex-row gap-2">
+            
+            <!-- <p-button icon="pi pi-heart" [outlined]="true" /> -->
+            <p-button icon="pi pi-trash" severity="danger" [outlined]="true" 
+            (onClick)="delete.emit(product)"
+            />
+            <p-button icon="pi pi-cog" [outlined]="true" (onClick)="update.emit(product)"/>
+            <p-button icon="pi pi-cart-minus" [outlined]="true" (onClick)="removeFromBasket.emit(product)"/>
+            <p-button icon="pi pi-shopping-cart" 
+            class="flex-auto md:flex-initial 
+            white-space-nowrap" 
+            label="Buy Now" 
+            [disabled]="product.inventoryStatus === 'OUTOFSTOCK'" 
+            (onClick)="addToBasket.emit(product)"
+            />
+         
+         </div>
+      </div>
+   </div>
+</div> 
