@@ -6,9 +6,23 @@
         {{ title }}
     </div>
     <div class="p-toolbar-group-end">
-        <i class="pi pi-shopping-cart mr-4 p-text-secondary" pBadge style="font-size: 2rem" value="{{basketService.cartItemCount}}"></i>
+        <p-button (onClick)="sidebarVisible = true"  >
+            <!-- <i class="pi pi-shopping-cart mr-4 p-text-secondary" pBadge style="font-size: 2rem" value="{{basketService.cartItemCount}}"></i> -->
+            <i class="pi pi-shopping-cart mr-4 p-text-primary" 
+            pBadge [severity]="basketService.cartItemCount>0 ? 'danger':'info'" style=" font-size: 2rem" value="{{basketService.cartItemCount}}"
+            ></i>
+        </p-button>
     </div>
 </p-toolbar>
+ <p-sidebar [(visible)]="sidebarVisible" position="right">
+    <h3>panier</h3>
+    @for(product of  this.basketService.GetProductsQuantity() ;track product)
+    {
+        <p>{{product.name}}: {{product.quantity}}</p>
+    }
+</p-sidebar> 
+
+
 <p-splitter 
     [panelSizes]="[20, 80]" 
     [style]="{ height: 'calc(100vh - 100px)' }">

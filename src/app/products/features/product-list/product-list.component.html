@@ -2,10 +2,6 @@
 
 <p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"/>
 
-    @for(product of  basketService.GetProductsQuantity() ;track product)
-    {
-        <p>{{product.name}}: {{product.quantity}}</p>
-    }
 
     <ng-template pTemplate="header">
         <div class="flex justify-content-between align-items-center">

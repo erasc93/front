@@ -1,4 +1,44 @@
 <form #contactForm="ngForm" (ngSubmit)="onSubmitForm(contactForm)">
+<p-dialog header="Envoyez un message" [modal]="true" [visible]="visible" [style]="{ width: '25rem' }">
+    <!-- <span class="p-text-secondary block mb-5">Envoyez un message.</span> -->
+    <!-- <div class="flex align-items-center gap-3 mb-3">
+        <label for="username" class="font-semibold w-6rem">Username</label>
+        <input pInputText id="username" class="flex-auto" autocomplete="off" />
+    </div>
+    <div class="flex align-items-center gap-3 mb-5">
+        <label for="email" class="font-semibold w-6rem">Email</label>
+        <input pInputText id="email" class="flex-auto" autocomplete="off" />
+    </div> -->
+
+
+
+   <div class="flex align-items-center gap-3 mb-5">
+      <label for="emailInput" 
+      class="font-semibold w-6rem"
+      >Email :</label>
+      <input class="flex-auto"
+      type="email" id="emailInput" [(ngModel)]="userEmail" name="email" required #emailCtrl="ngModel" />
+   </div> 
+   <div  class="flex align-items-left gap-3">
+      <label for="messageInput"
+      class="font-semibold w-6rem"
+      >Message :</label>
+      <textarea 
+class="flex-auto"
+        rows="5" cols="30" pInputTextarea 
+      id="messageInput" [(ngModel)]="userMessage" name="message" required maxlength="300" #messageCtrl="ngModel"></textarea>
+   </div> 
+
+    <div class="flex justify-content-end gap-2">
+        <p-button type="submit" [disabled]="contactForm.invalid">Envoyer</p-button>
+    </div>
+</p-dialog>
+</form>
+
+
+<!-- 
+
+<form #contactForm="ngForm" (ngSubmit)="onSubmitForm(contactForm)">
    <label for="emailInput">Email :</label>
    <input type="email" id="emailInput" [(ngModel)]="userEmail" name="email" required #emailCtrl="ngModel" />
    
@@ -6,10 +46,13 @@
    <textarea id="messageInput" [(ngModel)]="userMessage" name="message" required maxlength="300" #messageCtrl="ngModel"></textarea>
    
    <button type="submit" [disabled]="contactForm.invalid">Envoyer</button>
-</form>
+</form> -->
 
 @if(messageEnvoye){
    <div class="text-green-600">
       Demande de contact envoyée avec succès
    </div>
 }
+
+
+

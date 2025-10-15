@@ -6,6 +6,7 @@ import { ProductFormComponent } from "app/products/ui/product-form/product-form.
 import { BasketService } from "app/shared/basket.service";
 import { ButtonModule } from "primeng/button";
 import { CardModule } from "primeng/card";
+import { SidebarModule } from "primeng/sidebar";
 import { DataViewModule } from 'primeng/dataview';
 import { DialogModule } from 'primeng/dialog';
 import { ProductCardComponent } from "../product-card/product-card.component";
@@ -32,17 +33,17 @@ const emptyProduct: Product = {
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
   standalone: true,
-  imports: [DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent,CommonModule,ProductCardComponent],
+  imports: [SidebarModule, DataViewModule, CardModule, ButtonModule, DialogModule, ProductFormComponent,CommonModule,ProductCardComponent],
 })
 export class ProductListComponent implements OnInit {
-  constructor(protected basketService: BasketService) {}
   private readonly productsService = inject(ProductsService);
-
+  
   public readonly products = this.productsService.products;
-
+  
   public isDialogVisible = false;
   public isCreation = false;
   public readonly editedProduct = signal<Product>(emptyProduct);
+  constructor(protected basketService: BasketService) {}
 
   ngOnInit() {
     this.productsService
