@@ -6,10 +6,7 @@
         {{ title }}
     </div>
     <div class="p-toolbar-group-end">
-        <i class="pi pi-shopping-cart" style="font-size: 2rem" >salut</i>
-        @if(basketService.cartItemCount){
-            <span class="cart-badge" >{{ basketService.cartItemCount }}</span>
-        }
+        <i class="pi pi-shopping-cart mr-4 p-text-secondary" pBadge style="font-size: 2rem" value="{{basketService.cartItemCount}}"></i>
     </div>
 </p-toolbar>
 <p-splitter 
